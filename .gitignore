@@ -1,0 +1,16 @@
+# For MacOS:
+.DS_Store
+
+# For TextMate
+*.tmproj
+
+# For emacs:
+*~
+#\#*
+#.\#*
+
+# For vim:
+*.swp
+
+# For node
+node_modules
