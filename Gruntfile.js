@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         boss: true,
         eqnull: true,
         browser: true,
-        globals: {require: false, describe: false, it: false, module: false}
+        globals: {require: false, describe: false, it: false, module: false, beforeEach: false}
       },
       gruntfile: {
         src: 'Gruntfile.js'
