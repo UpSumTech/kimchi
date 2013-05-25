@@ -1,5 +1,6 @@
-module.exports = require('../src/object.js');
-module.exports = require('../src/array.js');
+require('../src/object.js');
+require('../src/array.js');
+var should = require('should');
 
 var assert = require("assert");
 describe('Array', function(){
