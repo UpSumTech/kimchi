@@ -12,16 +12,41 @@
       return this.length;
     };
 
-    var _destroy = function(element) {
+    var _destroy = function(element, errorCallback) {
       var index = this.indexOf(element);
-      return (index >= 0 ? this.splice(index, 1).first() : undefined);
+      if(index >= 0) {
+        return this.splice(index, 1).first();
+      } else {
+        return typeof errorCallback === 'function' ? errorCallback(this, element) : undefined;
+      }
+    };
+
+    var _destroy_at = function(index) {
+      return this.splice(index, 1).first();
+    };
+
+    var _destroy_if = function(callback) {
+      var self = this,
+        elements = this.filter(callback);
+      elements.forEach(function(element) {
+        self.destroy(element);
+      });
+      return elements;
+    };
+
+    var _clear = function() {
+      this.splice(0,this.length);
+      return this;
     };
 
     return {
       first: _first,
       last: _last,
       count: _count,
-      destroy: _destroy
+      destroy: _destroy,
+      destroy_at: _destroy_at,
+      destroy_if: _destroy_if,
+      clear: _clear
     };
   }());
 
