@@ -21,11 +21,11 @@
       }
     };
 
-    var _destroy_at = function(index) {
+    var _destroyAt = function(index) {
       return this.splice(index, 1).first();
     };
 
-    var _destroy_if = function(callback) {
+    var _destroyIf = function(callback) {
       var self = this,
         elements = this.filter(callback);
       elements.forEach(function(element) {
@@ -39,14 +39,42 @@
       return this;
     };
 
+    var _collect = function(callback) {
+      var array = [];
+      this.forEach(function(element) {
+        array.push(callback(element));
+      });
+      return array;
+    };
+
+    var _collectBang = function(callback) {
+      this.forEach(function(element, index, array) {
+        array[index] = callback(element);
+      });
+      return this;
+    };
+
+    var _compact = function() {
+      return this.filter(function(element) {return(element !== undefined && element !== null);});
+    };
+
+    var _compactBang = function() {
+      this.destroyIf(function(element) {return(element === undefined || element === null);});
+      return this;
+    };
+
     return {
       first: _first,
       last: _last,
       count: _count,
       destroy: _destroy,
-      destroy_at: _destroy_at,
-      destroy_if: _destroy_if,
-      clear: _clear
+      destroyAt: _destroyAt,
+      destroyIf: _destroyIf,
+      clear: _clear,
+      collect: _collect,
+      collectBang: _collectBang,
+      compact: _compact,
+      compactBang: _compactBang
     };
   }());
 
