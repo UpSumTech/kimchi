@@ -63,6 +63,22 @@
       return this;
     };
 
+    var _cycle = function(times, callback) {
+      var self = this,
+        result = [];
+      if(typeof times === 'number') {
+        while(times > 0) {
+          result = result.concat(self.map(callback));
+          times--;
+        }
+      } else {
+        while(true) {
+          result = result.concat(self.map(callback));
+        }
+      }
+      return result;
+    };
+
     return {
       first: _first,
       last: _last,
@@ -74,7 +90,8 @@
       collect: _collect,
       collectBang: _collectBang,
       compact: _compact,
-      compactBang: _compactBang
+      compactBang: _compactBang,
+      cycle: _cycle
     };
   }());
 

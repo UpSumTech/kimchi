@@ -161,4 +161,18 @@ describe('ArrayExt', function(){
       subject.should.eql([1,2,3]);
     });
   });
+
+  describe("#cycle", function() {
+    describe("when an integer specifying the number of times is provided", function() {
+      it("cycles through the array and applies the callback function to it the given number of times", function() {
+        subject.cycle(3, function(element) {return element * element;}).should.eql([1,4,9,1,4,9,1,4,9]);
+      });
+    });
+
+    describe("when an integer specifying the number of times is not provided", function() {
+      it("cycles through the array and applies the callback function to it the given number of times", function() {
+        // Don't know how to test infinite loops
+      });
+    });
+  });
 });
