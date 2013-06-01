@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       lib_test: {
-        src: ['src/**/*.js', 'test/**/*.js']
+        src: ['src/**/*.js']
       }
     },
     mochaTest: {
