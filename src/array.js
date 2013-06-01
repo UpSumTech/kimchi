@@ -98,6 +98,10 @@
       return this.slice(index);
     };
 
+    var _isEmpty = function() {
+      return this.length === 0;
+    };
+
     return {
       first: _first,
       last: _last,
@@ -112,7 +116,8 @@
       compactBang: _compactBang,
       cycle: _cycle,
       drop: _drop,
-      dropWhile: _dropWhile
+      dropWhile: _dropWhile,
+      isEmpty: _isEmpty
     };
   }());
 

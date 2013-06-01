@@ -209,4 +209,18 @@ describe('ArrayExt', function(){
       });
     });
   });
+
+  describe("#isEmpty()", function() {
+    describe("when the array does not contain any element", function() {
+      it("returns true", function() {
+        [].isEmpty().should.be.true;
+      });
+    });
+
+    describe("when the array contains at least one element", function() {
+      it("returns false", function() {
+        subject.isEmpty().should.be.false;
+      });
+    });
+  });
 });
