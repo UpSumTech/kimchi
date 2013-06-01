@@ -162,7 +162,7 @@ describe('ArrayExt', function(){
     });
   });
 
-  describe("#cycle", function() {
+  describe("#cycle()", function() {
     describe("when an integer specifying the number of times is provided", function() {
       it("cycles through the array and applies the callback function to it the given number of times", function() {
         subject.cycle(3, function(element) {return element * element;}).should.eql([1,4,9,1,4,9,1,4,9]);
@@ -172,6 +172,40 @@ describe('ArrayExt', function(){
     describe("when an integer specifying the number of times is not provided", function() {
       it("cycles through the array and applies the callback function to it the given number of times", function() {
         // Don't know how to test infinite loops
+      });
+    });
+  });
+
+  describe("#drop()", function() {
+    describe("when a positive number is passed to the function", function() {
+      describe("when the number is less than equal to the length of the array", function() {
+        it("drops the first n elements and returns the rest of the array", function() {
+          subject.drop(2).should.eql([3]);
+        });
+      });
+
+      describe("when the number is greater than the length of the array", function() {
+      });
+    });
+
+    describe("when a negative number is passed to the function", function() {
+      it("throws an error", function() {
+        var testFn = function() {subject.drop(-1);};
+        testFn.should.throwError(/should be a positive number/);
+      });
+    });
+  });
+
+  describe("#dropWhile()", function() {
+    describe("when at least one element matches the condition", function() {
+      it("drops the elements up to, but not including the first element for which the block returns false", function() {
+        subject.dropWhile(function(element) {return element % 2 !== 0;}).should.eql([2, 3]);
+      });
+    });
+
+    describe("when no element matches the condition", function() {
+      it("returns an empty array", function() {
+        subject.dropWhile(function(element) {return element % 4 !== 0;}).should.eql(subject);
       });
     });
   });

@@ -79,6 +79,25 @@
       return result;
     };
 
+    var _drop = function(num) {
+      if(num > 0) {
+        return this.slice(num);
+      } else {
+        throw new TypeError("Argument passed to drop should be a positive number");
+      }
+    };
+
+    var _dropWhile = function(callback) {
+      var i = 0, index;
+      while(index === undefined && i < this.length) {
+        if(!callback(this[i])) {
+          index = i;
+        }
+        i++;
+      }
+      return this.slice(index);
+    };
+
     return {
       first: _first,
       last: _last,
@@ -91,7 +110,9 @@
       collectBang: _collectBang,
       compact: _compact,
       compactBang: _compactBang,
-      cycle: _cycle
+      cycle: _cycle,
+      drop: _drop,
+      dropWhile: _dropWhile
     };
   }());
 
