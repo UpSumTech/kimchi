@@ -247,4 +247,26 @@ describe('ArrayExt', function(){
       });
     });
   });
+
+  describe("#isEql()", function() {
+    describe("when the arrays are same", function() {
+      it("returns true", function() {
+        subject.isEql([1,2,3]).should.be.true;
+      });
+    });
+
+    describe("when the arrays are not the same", function() {
+      describe("when one array is a subset of another", function() {
+        it("returns false", function() {
+          subject.isEql([1,2,3,4]).should.be.false;
+        });
+      });
+
+      describe("when both arrays have same size but at least one element is different", function() {
+        it("returns false", function() {
+          subject.isEql([1,4,3]).should.be.false;
+        });
+      });
+    });
+  });
 });

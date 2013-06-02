@@ -114,6 +114,12 @@
       }
     };
 
+    var _isEql = function(other) {
+      return this.length === other.length && this.every(function(element, index) {
+        return element === other[index];
+      });
+    };
+
     return {
       first: _first,
       last: _last,
@@ -130,7 +136,8 @@
       drop: _drop,
       dropWhile: _dropWhile,
       isEmpty: _isEmpty,
-      fetch: _fetch
+      fetch: _fetch,
+      isEql: _isEql
     };
   }());
 
