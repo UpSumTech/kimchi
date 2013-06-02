@@ -1,5 +1,6 @@
 require('../src/object.js');
 require('../src/array.js');
+require('readline');
 var should = require('should');
 
 describe('ArrayExt', function(){
@@ -220,6 +221,29 @@ describe('ArrayExt', function(){
     describe("when the array contains at least one element", function() {
       it("returns false", function() {
         subject.isEmpty().should.be.false;
+      });
+    });
+  });
+
+  describe("#fetch()", function() {
+    describe("when the index passed is valid", function() {
+      it("returns the array element", function() {
+        subject.fetch(1).should.eql(2);
+      });
+    });
+
+    describe("when the index is invalid", function() {
+      describe("when a callback function to handle the error is passed", function() {
+        it("executes the callback", function() {
+          subject.fetch(4, function(index, array) {return array.toString() + " does not have any element at index " + index.toString();}).should.eql("1,2,3 does not have any element at index 4");
+        });
+      });
+
+      describe("when a callback is not passed", function() {
+        it("throws an error", function() {
+          var testFn = function() {subject.fetch(4);};
+          testFn.should.throwError(/Index is not valid/);
+        });
       });
     });
   });

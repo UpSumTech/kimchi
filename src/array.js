@@ -102,6 +102,18 @@
       return this.length === 0;
     };
 
+    var _fetch = function(index, callback) {
+      if(index < 0 || index >= this.length) {
+        if(typeof callback !== 'function') {
+          throw new TypeError("Index is not valid");
+        } else {
+          return callback(index, this);
+        }
+      } else {
+        return this[index];
+      }
+    };
+
     return {
       first: _first,
       last: _last,
@@ -117,7 +129,8 @@
       cycle: _cycle,
       drop: _drop,
       dropWhile: _dropWhile,
-      isEmpty: _isEmpty
+      isEmpty: _isEmpty,
+      fetch: _fetch
     };
   }());
 
