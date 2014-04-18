@@ -14,3 +14,4 @@
 
 # For node
 node_modules
+.nvmrc
