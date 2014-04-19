@@ -1,13 +1,13 @@
 require('../src/object.js');
-require('../src/array.js');
+var KimchiArray = require('../src/array.js');
 require('readline');
 var should = require('should');
 
-describe('ArrayExt', function(){
+describe('Array', function(){
   var subject;
 
   beforeEach(function() {
-    subject = [1,2,3];
+    subject = KimchiArray([1,2,3]);
   });
 
   describe('#first()', function(){
