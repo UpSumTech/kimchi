@@ -14,51 +14,53 @@
     if(obj instanceof KimchiArray) return obj;
     if(!(this instanceof KimchiArray)) return new KimchiArray(obj);
     if(obj instanceof Array) {
-      this.originalObject = obj;
+      this._originalObject = obj;
     } else {
       throw new TypeError("Argument must be an array");
     }
   };
 
   KimchiArray.prototype = (function() {
-    var result = {}
-    for(var property in ["length", "indexOf", "toString"]) {
-      result[property] = function() {
-        ArrayPrototype[property].apply(this.originalObject, arguments);
-      }
+    var _elements = function() {
+      return this._originalObject;
     };
-    return result;
-  })();
 
-  _.extend(KimchiArray.prototype, (function() {
+    var _toS = function() {
+      return this.elements().toString();
+    };
+
+    var _insert = function(obj) {
+      this.elements().push(obj);
+    };
+
     var _first = function() {
-      return this.originalObject[0];
+      return this.elements()[0];
     };
 
     var _last = function() {
-      return this.originalObject[this.length - 1];
+      return this.elements()[this.elements().length - 1];
     };
 
     var _count = function() {
-      return this.length;
+      return this.elements().length;
     };
 
     var _destroy = function(element, errorCallback) {
-      var index = this.indexOf(element);
+      var index = this.elements().indexOf(element);
       if(index >= 0) {
-        return this.originalObject.splice(index, 1)[0];
+        return this.elements().splice(index, 1)[0];
       } else {
         return typeof errorCallback === 'function' ? errorCallback(this, element) : undefined;
       }
     };
 
     var _destroyAt = function(index) {
-      return this.originalObject.splice(index, 1)[0];
+      return this.elements().splice(index, 1)[0];
     };
 
     var _destroyIf = function(callback) {
       var self = this,
-      elements = this.originalObject.filter(callback);
+      elements = this.elements().filter(callback);
       elements.forEach(function(element) {
         self.destroy(element);
       });
@@ -66,27 +68,27 @@
     };
 
     var _clear = function() {
-      this.originalObject.splice(0,this.length);
+      this.elements().splice(0,this.elements().length);
       return this;
     };
 
     var _collect = function(callback) {
       var array = [];
-      this.originalObject.forEach(function(element) {
+      this.elements().forEach(function(element) {
         array.push(callback(element));
       });
       return KimchiArray(array);
     };
 
     var _collectBang = function(callback) {
-      this.originalObject.forEach(function(element, index, array) {
+      this.elements().forEach(function(element, index, array) {
         array[index] = callback(element);
       });
       return this;
     };
 
     var _compact = function() {
-      var result = this.originalObject.filter(function(element) {
+      var result = this.elements().filter(function(element) {
         return(element !== undefined && element !== null);
       });
       return KimchiArray(result);
@@ -104,12 +106,12 @@
       result = [];
       if(typeof times === 'number') {
         while(times > 0) {
-          result = result.concat(self.originalObject.map(callback));
+          result = result.concat(self.elements().map(callback));
           times--;
         }
       } else {
         while(true) {
-          result = result.concat(self.originalObject.map(callback));
+          result = result.concat(self.elements().map(callback));
         }
       }
       return KimchiArray(result);
@@ -117,7 +119,7 @@
 
     var _drop = function(num) {
       if(num > 0) {
-        return KimchiArray(this.originalObject.slice(num));
+        return KimchiArray(this.elements().slice(num));
       } else {
         throw new TypeError("Argument passed to drop should be a positive number");
       }
@@ -125,40 +127,43 @@
 
     var _dropWhile = function(callback) {
       var i = 0, index;
-      while(index === undefined && i < this.length) {
-        if(!callback(this.originalObject[i])) {
+      while(index === undefined && i < this.elements().length) {
+        if(!callback(this.elements()[i])) {
           index = i;
         }
         i++;
       }
-      return KimchiArray(this.originalObject.slice(index));
+      return KimchiArray(this.elements().slice(index));
     };
 
     var _isEmpty = function() {
-      return this.length === 0;
+      return this.elements().length === 0;
     };
 
     var _fetch = function(index, callback) {
-      if(index < 0 || index >= this.length) {
+      if(index < 0 || index >= this.elements().length) {
         if(typeof callback !== 'function') {
           throw new TypeError("Index is not valid");
         } else {
           return callback(index, this);
         }
       } else {
-        return this.originalObject[index];
+        return this.elements()[index];
       }
     };
 
     var _isEql = function(other) {
-      return this.length === other.length &&
-        this.originalObject.every(function(element, index) {
-          return element === other.originalObject[index];
+      return this.elements().length === other.elements().length &&
+        this.elements().every(function(element, index) {
+          return element === other.elements()[index];
         });
     };
 
     return {
       constructor: KimchiArray,
+      toS: _toS,
+      elements: _elements,
+      insert: _insert,
       first: _first,
       last: _last,
       count: _count,
@@ -177,7 +182,7 @@
       fetch: _fetch,
       isEql: _isEql
     };
-  })());
+  })();
 
   return KimchiArray;
 });
