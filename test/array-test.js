@@ -10,6 +10,49 @@ describe('Array', function(){
     subject = KimchiArray([1,2,3]);
   });
 
+  describe('#toS()', function() {
+    it('returns the string representation of the array', function() {
+      subject.toS().should.equal('1,2,3');
+    });
+  });
+
+  describe('#insert()', function() {
+    describe('when one argument is provided', function() {
+      it('inserts an element at the end of the array', function() {
+        subject.insert(5);
+        subject.count().should.equal(4);
+        subject.index(5).should.equal(3);
+      });
+    });
+
+    describe('when multiple arguments are provided', function() {
+      describe('when a single element is provided for insertion', function() {
+        it('inserts an element into the array', function() {
+          subject.insert(1, 5);
+          subject.count().should.equal(4);
+          subject.index(5).should.equal(1);
+        });
+      });
+
+      describe('when multiple elements are provided for insertion', function() {
+        it('inserts the elements into the array', function() {
+          subject.insert(1, 5, 6,7);
+          subject.count().should.equal(6);
+          subject.index(5).should.equal(1);
+          subject.index(6).should.equal(2);
+          subject.index(7).should.equal(3);
+        });
+      });
+    });
+
+    describe('when no arguments are provided', function() {
+      it('throws an error', function() {
+        var testFn = function() {subject.insert();};
+        testFn.should.throwError(/needs at least one argument/);
+      });
+    });
+  });
+
   describe('#first()', function(){
     it('returns the first element of the array', function(){
       subject.first().should.equal(1);

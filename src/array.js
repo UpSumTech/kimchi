@@ -29,8 +29,21 @@
       return this.elements().toString();
     };
 
-    var _insert = function(obj) {
-      this.elements().push(obj);
+    var _insert = function() {
+      var args = Array.prototype.slice.call(arguments);
+      if(args.length == 0) throw new TypeError("Insert needs at least one argument");
+      if(args.length == 1) {
+        this.elements().push(args[0]);
+      } else {
+        var self = this;
+        args.slice(1).forEach(function(obj, index) {
+          self.elements().splice(args[0] + index, 0, obj);
+        });
+      }
+    };
+
+    var _index = function(obj, callback) {
+      return this.elements().indexOf(obj);
     };
 
     var _first = function() {
@@ -164,6 +177,7 @@
       toS: _toS,
       elements: _elements,
       insert: _insert,
+      index: _index,
       first: _first,
       last: _last,
       count: _count,
