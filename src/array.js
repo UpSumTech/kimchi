@@ -1,13 +1,14 @@
-(function(definition) {
+(function(root, factory) {
   if(typeof exports === 'object') {
-    var KimchiArray = definition();
-    module.exports = KimchiArray;
+    var KimchiArray = factory(require('lodash'));
     exports.KimchiArray = KimchiArray;
+    module.exports = KimchiArray;
+  } else if (typeof 'define' === 'function' && define.amd) {
+    define(['lodash'], factory);
   } else {
-    KimchiArray = definition();
+    root.KimchiArray = factory(root._);
   }
-})(function() {
-  var _ = require('lodash');
+})(this, function(_) {
   var ArrayPrototype = Array.prototype;
 
   var KimchiArray = function(obj) {

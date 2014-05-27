@@ -1,12 +1,14 @@
-(function(definition) {
+(function(root, factory) {
   if(typeof exports === 'object') {
-    module.exports = definition();
+    var Validation = factory(require('lodash'));
+    exports.Validation = Validation;
+    module.exports = Validation;
+  } else if(typeof 'define' === 'function' && define.amd) {
+    define(['lodash'], factory);
   } else {
-    Validation = definition();
+    root.Validation = factory();
   }
-})(function() {
-  var _ = require('lodash');
-
+})(this, function(_) {
   var V = function() {
     this.validators = {};
     this.validations = {};
@@ -92,7 +94,7 @@
 
     var _validate = function(data) {
       var type,
-        self = this;
+      self = this;
 
       return _.reduce(self.validations, function(errors, types, key) {
         error = _validateAttribute.apply(self, [types, key, data[key]]);

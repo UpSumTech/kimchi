@@ -1,12 +1,16 @@
-(function(definition) {
+(function(root, factory) {
   if(typeof exports === 'object') {
-    module.exports = definition();
+    var Constant = factory();
+    exports.Constant = Constant;
+    module.exports = Constant;
+  } else if(typeof 'define' === 'function' && define.amd) {
+    define(factory);
   } else {
-    Constant = definition();
+    root.Constant = factory();
   }
-})(function() {
+})(this, function() {
   var availableConstants = {},
-    prefix = "$" + Math.random().toString().slice(2) + "_";
+  prefix = "$" + Math.random().toString().slice(2) + "_";
 
   var _get = function(name) {
     if(_isDefined(name)) {
