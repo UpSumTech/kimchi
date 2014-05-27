@@ -3,6 +3,7 @@ should = require('should');
 Validation = require('../src/validation.js');
 
 describe('Validation', function() {
+  var _ = require('lodash');
   var subject
 
   beforeEach(function() {

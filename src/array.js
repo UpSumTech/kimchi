@@ -7,7 +7,7 @@
     KimchiArray = definition();
   }
 })(function() {
-  _ = require('lodash');
+  var _ = require('lodash');
   var ArrayPrototype = Array.prototype;
 
   var KimchiArray = function(obj) {

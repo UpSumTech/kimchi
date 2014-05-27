@@ -5,7 +5,7 @@
     Validation = definition();
   }
 })(function() {
-  _ = require('lodash');
+  var _ = require('lodash');
 
   var V = function() {
     this.validators = {};
