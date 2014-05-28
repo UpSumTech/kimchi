@@ -15,3 +15,6 @@
 # For node
 node_modules
 .nvmrc
+
+# For log files
+*.log
