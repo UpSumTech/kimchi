@@ -1,6 +1,6 @@
 require('readline');
-should = require('should');
-Validation = require('../src/validation.js');
+var expect = require('chai').expect,
+Validation = require('../../src/validation.js');
 
 describe('Validation', function() {
   var _ = require('lodash');
@@ -21,29 +21,29 @@ describe('Validation', function() {
     describe("when the validator is a function", function() {
       describe("when the validator has not been registered before", function() {
         it("registers the validator", function() {
-          subject.validators.should.have.property("isPresent");
+          expect(subject.validators).to.have.property("isPresent");
         });
       });
 
       describe("when the validator has already been registered", function() {
         it("throws an error", function() {
-          (function() {
+          expect(function() {
             subject.registerValidator("isPresent", {
               message: "is not present",
               isValid: function(value) {
                 return !(value === undefined || value === null);
               }
             });
-          }).should.throw();
+          }).to.throw();
         });
       });
     });
 
     describe("when the validator is not a function", function() {
       it("throws an error", function() {
-         (function() {
-           subject.registerValidator("isString", {message: "is not a string", isValid: true});
-         }).should.throw();
+        expect(function() {
+          subject.registerValidator("isString", {message: "is not a string", isValid: true});
+        }).to.throw();
       });
     });
   });
@@ -51,25 +51,25 @@ describe('Validation', function() {
   describe("#registerValidations", function() {
     describe("when the validators is not an array", function() {
       it("throws an error", function() {
-        (function() {
+        expect(function() {
           subject.registerValidations("bar", "isPresent");
-        }).should.throw();
+        }).to.throw();
       });
     });
 
     describe("when the validators is an array", function() {
       describe("when the validators have not been registered", function() {
         it("throws an error", function() {
-          (function() {
+          expect(function() {
             subject.registerValidations("bar", ["isPresent", "isString"]);
-          }).should.throw();
+          }).to.throw();
         });
       });
 
       describe("when the validators have been registered", function() {
         it("registers the validation", function() {
           subject.registerValidations("bar", ["isPresent"]);
-          subject.validations.bar.should.containEql("isPresent");
+          expect(subject.validations.bar).to.include("isPresent");
         });
       });
     });
@@ -78,13 +78,13 @@ describe('Validation', function() {
   describe("#isValid", function() {
     describe("when the data is valid", function() {
       it("returns true", function() {
-        subject.isValid({foo: ["bar"]}).should.equal.true;
+        expect(subject.isValid({foo: ["bar"]})).to.equal.true;
       });
     });
 
     describe("when the data is not valid", function() {
       it("returns false", function() {
-        subject.isValid({foo: []}).should.equal.false;
+        expect(subject.isValid({foo: []})).to.equal.false;
       });
     });
   });

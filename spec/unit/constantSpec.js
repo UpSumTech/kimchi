@@ -1,6 +1,6 @@
 require('readline');
-var should = require('should');
-Constant = require('../src/constant');
+var expect = require('chai').expect;
+Constant = require('../../src/constant.js');
 
 describe('Constant', function(){
   describe('.get()', function(){
@@ -10,13 +10,13 @@ describe('Constant', function(){
       });
 
       it('returns the constant', function(){
-        Constant.get('TEST1').should.equal('test value 1');
+        expect(Constant.get('TEST1')).to.equal('test value 1');
       });
     });
 
     describe('undefined', function() {
       it('returns undefined', function(){
-        should(Constant.get('TEST0')).be.type('undefined');
+        expect(Constant.get('TEST0')).to.be.undefined
       });
     });
   });
@@ -24,7 +24,7 @@ describe('Constant', function(){
   describe('.set()', function(){
     it('returns the constant', function(){
       Constant.set('TEST2', 'test value 2');
-      Constant.get('TEST2').should.equal('test value 2');
+      expect(Constant.get('TEST2')).to.equal('test value 2');
     });
   });
 
@@ -35,13 +35,13 @@ describe('Constant', function(){
       });
 
       it('returns true', function(){
-        Constant.isDefined('TEST3').should.equal.true;
+        expect(Constant.isDefined('TEST3')).to.equal.true;
       });
     });
 
     describe('not set', function() {
       it('returns false', function(){
-        Constant.isDefined('TEST4').should.equal.false;
+        expect(Constant.isDefined('TEST4')).to.equal.false;
       });
     });
   })
