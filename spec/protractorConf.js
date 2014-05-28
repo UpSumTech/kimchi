@@ -26,7 +26,7 @@ exports.config = {
   // find chromedriver. This will be passed to the selenium jar as
   // the system property webdriver.chrome.driver. If null, selenium will
   // attempt to find chromedriver using PATH.
-  chromeDriver: './selenium/chromedriver',
+  chromeDriver: null,
   // If true, only chromedriver will be started, not a standalone selenium.
   // Tests for browsers other than chrome will not run.
   chromeOnly: false,
@@ -53,7 +53,8 @@ exports.config = {
   //
   // Spec patterns are relative to the location of this config.
   specs: [
-    'spec/*_spec.js',
+    'unit/*Spec.js',
+    'integration/*Spec.js',
   ],
 
   // Patterns to exclude.
@@ -63,8 +64,9 @@ exports.config = {
   // all suites will run. If run with --suite=smoke, only the patterns matched
   // by that suite will run.
   suites: {
-    smoke: 'spec/smoketests/*.js',
-    full: 'spec/*.js'
+    unit: 'unit/*Spec.js',
+    integration: 'integration/*Spec.js',
+    full: 'spec/**/*Spec.js'
   },
 
   // ----- Capabilities to be passed to the webdriver instance ----
@@ -74,7 +76,12 @@ exports.config = {
   // and
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'firefox',
+    'cssSelectorsEnabled': true,
+    'handlesAlerts': true,
+    'nativeEvents': true,
+    'javascriptEnabled': true,
+    'databaseEnabled': false
   },
 
   // If you would like to run more than one instance of webdriver on the same
@@ -120,7 +127,7 @@ exports.config = {
   // Jasmine and Cucumber are fully supported as a test and assertion framework.
   // Mocha has limited beta support. You will need to include your own
   // assertion framework if working with mocha.
-  framework: 'jasmine',
+  framework: 'mocha',
 
   // ----- Options to be passed to minijasminenode -----
   //
