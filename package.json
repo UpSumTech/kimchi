@@ -15,6 +15,10 @@
     "grunt-mocha-test": "^0.10.2",
     "lodash": "~2.4.1",
     "chai": "^1.9.1",
-    "chai-as-promised": "^4.1.1"
+    "chai-as-promised": "^4.1.1",
+    "mocha": "^1.20.0",
+    "mocha-server": "^0.2.0",
+    "protractor": "^0.23.1",
+    "requirejs": "^2.1.13"
   }
 }
