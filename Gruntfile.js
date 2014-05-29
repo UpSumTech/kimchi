@@ -56,9 +56,10 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec'
+          reporter: 'spec',
+          ui: 'bdd'
         },
-        src: ['test/**/*.js']
+        src: ['test/unit/**/*.js']
       }
     },
     watch: {
